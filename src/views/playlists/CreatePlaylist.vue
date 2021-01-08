@@ -8,8 +8,9 @@
             <textarea required placeholder="Playlist description" v-model="description"></textarea>
         </label>
         <label for="cover">Upload playlist cover image</label>
-        <input type="file" id="cover">
-        <div class="error" v-if="error">{{ error }}</div>
+        <input type="file" id="cover" @change="handleChange">
+        <div class="error" v-if="fileError">{{ fileError }}</div>
+        <div class="error" v-if="error"></div>
         <button>Create</button>
     </form>
 </template>
@@ -22,12 +23,28 @@ export default {
     setup() {
         const title = ref('')
         const description = ref('')
+        const file = ref(null)
+        const fileError = ref(null)
 
         const handleSubmit = () => {
             console.log(title.value, description.value)
         }
 
-        return { title, description, handleSubmit }
+        // Allow file types
+        const types = ['image/png', 'image/jpeg']
+
+        const handleChange = (event) => {
+            const selectedImage = event.target.files[0]
+            if (selectedImage && types.includes(selectedImage.type)) {
+                file.value = selectedImage
+                fileError.value = null
+            } else {
+                file.value = null
+                fileError.value = 'Please select an image file (png or jpg)'
+            }
+        }
+
+        return { title, description, file, fileError, handleSubmit, handleChange }
     }
 }
 </script>
