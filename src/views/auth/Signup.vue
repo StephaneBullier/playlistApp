@@ -1,9 +1,15 @@
 <template>
     <form @submit.prevent="handleSubmit">
         <h3>Signup</h3>
-        <input type="text" placeholder="Display name" v-model="displayName">
-        <input type="email" placeholder="Email" v-model="email">
-        <input type="password" placeholder="Password" v-model="password">
+        <label>
+            <input type="text" placeholder="Display name" v-model="displayName">
+        </label>
+        <label>
+            <input type="email" placeholder="Email" v-model="email">
+        </label>
+        <label>
+            <input type="password" placeholder="Password" v-model="password">
+        </label>
         <div class="error" v-if="error">{{error}}</div>
         <button v-if="!isPending">Sign up</button>
         <button v-if="isPending" disabled>Loading</button>
@@ -17,7 +23,7 @@ import {ref} from 'vue';
 export default {
     name: "Signup",
     setup() {
-        const { error, pending, signup } = useSignup()
+        const { error, isPending, signup } = useSignup()
         const displayName = ref('')
         const email = ref('')
         const password = ref('')
@@ -26,7 +32,7 @@ export default {
             await signup(email.value, password.value, displayName.value)
         }
 
-        return { error, pending, displayName, email, password, handleSubmit }
+        return { error, isPending, displayName, email, password, handleSubmit }
     }
 }
 </script>
