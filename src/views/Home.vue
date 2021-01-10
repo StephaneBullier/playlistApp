@@ -2,9 +2,7 @@
     <div class="home">
         <div class="error" v-if="error">Les données ne peuvent pas être récupérées.</div>
         <div v-if="documents">
-            <div v-for="playlist in documents" :key="playlist.id">
-                <h2>{{ playlist.title }}</h2>
-            </div>
+             <list-view :playlists="documents"></list-view>
         </div>
     </div>
 
@@ -12,8 +10,11 @@
 
 <script>
 import getCollection from '@/composables/getCollection'
+import ListView from '@/components/ListView';
+
 export default {
     name: 'Home',
+    components: { ListView },
     setup() {
         const { documents, error } = getCollection('playlists')
 
