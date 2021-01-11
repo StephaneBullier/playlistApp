@@ -7,7 +7,7 @@
                 <input type="text" placeholder="Title" required v-model="title">
             </label>
             <label>
-                <input type="text" placeholder="Artist" required v-model="title">
+                <input type="text" placeholder="Artist" required v-model="artist">
             </label>
             <button>Save</button>
         </form>
@@ -17,13 +17,16 @@
 
 <script>
 import {ref} from 'vue';
+import useDocument from '@/composables/useDocument'
 
 export default {
     name: "AddSong",
-    setup() {
+    props: ['playlist'],
+    setup(props) {
         const title = ref('')
         const artist = ref('')
         const showForm = ref(false)
+        const { updateDoc } = useDocument('playlists', props.playlist.id)
 
         const handleSubmit = async () => {
             const newSong = {
@@ -31,7 +34,11 @@ export default {
                 artist: artist.value,
                 id: Math.floor(Math.random() * 1000000)
             }
-
+            await updateDoc({
+                songs: [...props.playlist.songs, newSong]
+            })
+            title.value = ''
+            artist.value = ''
         }
 
         return { title, artist, showForm, handleSubmit }
