@@ -12,7 +12,14 @@
         </div>
         <!-- Song list -->
         <div class="song-list">
-            Song list
+            <div v-if="!playlist.songs.length">Aucun chanson ajoutée à la playlist</div>
+            <div v-for="song in playlist.songs" class="single-song" :key="song.id">
+                <div class="details">
+                    <h3>{{ song.title }}</h3>
+                    <p>{{ song.artist }}</p>
+                </div>
+                <button v-if="ownership">Delete</button>
+            </div>
             <add-song v-if="ownership" :playlist="playlist" />
         </div>
     </div>
@@ -91,5 +98,13 @@ export default {
 }
 .description {
     text-align: left;
+}
+.single-song {
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed var(--secondary);
+    margin-bottom: 20px;
 }
 </style>
