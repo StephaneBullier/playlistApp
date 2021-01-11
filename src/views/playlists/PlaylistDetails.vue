@@ -6,7 +6,7 @@
                 <img :src="playlist.coverUrl" alt="">
             </div>
             <h2>{{ playlist.title }}</h2>
-            <p>Created by {{ playlist.userName }}</p>
+            <p class="username">Created by {{ playlist.userName }}</p>
             <p class="description">{{ playlist.description }}</p>
         </div>
         <!-- Song list -->
