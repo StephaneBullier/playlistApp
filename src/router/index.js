@@ -1,13 +1,8 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import Home from '@/views/Home'
-import Login from '@/views/auth/Login'
-import Signup from '@/views/auth/Signup'
-import CreatePlaylist from '@/views/playlists/CreatePlaylist'
 
 // route guard
 import { projectAuth } from '@/firebase/config';
-import PlaylistDetails from '@/views/playlists/PlaylistDetails';
-import UserPlaylists from '@/views/playlists/UserPlaylists';
 
 const requireAuth = (to, from, next) => {
     let user = projectAuth.currentUser
@@ -29,30 +24,30 @@ const routes = [
     {
         path: '/login',
         name: 'Login',
-        component: Login
+        component: () => import(/* webpackChunkName: "login" */ '@/views/auth/Login')
     },
     {
         path: '/signup',
         name: 'Signup',
-        component: Signup
+        component: () => import(/* webpackChunkName: "signup" */ '@/views/auth/Signup')
     },
     {
         path: '/playlists/create',
         name: 'CreatePlaylist',
-        component: CreatePlaylist,
+        component: () => import(/* webpackChunkName: "createPlaylist" */ '@/views/playlists/CreatePlaylist'),
         beforeEnter: requireAuth
     },
     {
         path: '/playlists/:id',
         name: 'PlaylistDetails',
-        component: PlaylistDetails,
+        component: () => import(/* webpackChunkName: "playlistDetails" */ '@/views/playlists/PlaylistDetails'),
         beforeEnter: requireAuth,
         props: true
     },
     {
         path: '/playlists/user',
         name: 'UserPlaylists',
-        component: UserPlaylists,
+        component: () => import(/* webpackChunkName: "userPlaylists" */ '@/views/playlists/UserPlaylists'),
         beforeEnter: requireAuth,
     }
 ]
