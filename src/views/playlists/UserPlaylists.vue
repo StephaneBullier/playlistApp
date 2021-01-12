@@ -5,6 +5,7 @@
             <list-view :playlists="playlists" />
         </div>
     </div>
+    <router-link :to="{ name: 'CreatePlaylist' }" class="btn">Create a new playlist</router-link>
 </template>
 
 <script>
