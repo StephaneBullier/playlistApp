@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar">
-        <img src="@/assets/ninja.png" alt="Muso Ninja">
-        <h1><router-link :to="{ name: 'Home' }">App Name</router-link></h1>
+        <img src="@/assets/ninja.png" alt="ninja">
+        <h1><router-link :to="{ name: 'Home' }">Ninja Playlist App</router-link></h1>
         <div class="links">
             <div v-if="user">
                 <router-link :to="{ name: 'CreatePlaylist' }">Create playlist</router-link>
